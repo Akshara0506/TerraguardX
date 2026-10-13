@@ -1,0 +1,30 @@
+{
+  "name": "terraguardx-monorepo",
+  "version": "1.0.0",
+  "description": "AI-Powered Geospatial Landslide Risk Monitoring & Early Warning Decision-Support System",
+  "private": true,
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "python -m uvicorn app.main:app --app-dir backend --port 8000 --reload",
+    "build": "npm --prefix frontend run build",
+    "build:frontend": "npm --prefix frontend run build",
+    "install:frontend": "npm --prefix frontend install",
+    "install:backend": "pip install -r backend/requirements.txt",
+    "test:backend": "python -m pytest tests/test_core.py",
+    "verify": "python tests/verify_frontend_backend.py"
+  },
+  "keywords": [
+    "landslide-risk",
+    "geospatial",
+    "ai",
+    "fastapi",
+    "react",
+    "terraguardx"
+  ],
+  "author": "",
+  "license": "MIT"
+}

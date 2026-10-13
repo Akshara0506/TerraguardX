@@ -77,12 +77,22 @@ def train(kind: str, df: pd.DataFrame | None = None) -> dict:
 
 
 def load(kind: str) -> dict:
-    """Load latest version of a model, training one if none exists."""
+    """Load latest version of a model, training one if none exists or if cached model is incompatible."""
     files = sorted(MODEL_DIR.glob(f"{kind}_v*.joblib"), key=lambda p: int(p.stem.split("_v")[-1]))
     if not files:
         train(kind)
         return load(kind)
-    return joblib.load(files[-1])
+    try:
+        bundle = joblib.load(files[-1])
+        # verify pipeline is functional
+        if "pipeline" in bundle and hasattr(bundle["pipeline"], "predict_proba"):
+            return bundle
+        raise ValueError("Invalid model bundle")
+    except Exception:
+        # Version incompatibility or corrupted file - retrain fresh version
+        train(kind)
+        files = sorted(MODEL_DIR.glob(f"{kind}_v*.joblib"), key=lambda p: int(p.stem.split("_v")[-1]))
+        return joblib.load(files[-1])
 
 
 def predict(bundle: dict, rows: pd.DataFrame) -> np.ndarray:

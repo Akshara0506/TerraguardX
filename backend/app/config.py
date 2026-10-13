@@ -34,7 +34,7 @@ LEVELS = [(25, "LOW"), (50, "MEDIUM"), (75, "HIGH"), (100.0001, "CRITICAL")]  # 
 DISCLAIMER = ("Prototype decision-support system. Predictions require validation and "
               "should not replace official disaster-management instructions.")
 USERS = {  # demo accounts; passwords from env (dev defaults for demo mode only)
-    "admin": ("ADMIN", os.getenv("ADMIN_PASSWORD", "Sasikarthi@123" if os.getenv("ADMIN_PASSWORD") else "admin123")),
-    "authority": ("AUTHORITY", os.getenv("AUTHORITY_PASSWORD", "Sasikarthi@1234" if os.getenv("AUTHORITY_PASSWORD") else "authority123")),
-    "viewer": ("VIEWER", os.getenv("VIEWER_PASSWORD", "Sasikarthi@12345" if os.getenv("VIEWER_PASSWORD") else "viewer123")),
+    "admin": ("ADMIN", (os.getenv("ADMIN_PASSWORD") or "").strip() or "Sasikarthi@123"),
+    "authority": ("AUTHORITY", (os.getenv("AUTHORITY_PASSWORD") or "").strip() or "Sasikarthi@1234"),
+    "viewer": ("VIEWER", (os.getenv("VIEWER_PASSWORD") or "").strip() or "Sasikarthi@12345"),
 }
